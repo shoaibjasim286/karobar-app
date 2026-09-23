@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#082f32">
+  <meta name="description" content="Karobar - offline-first business hisaab diary">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Karobar</title>
+</head>
+<body>
+<div id="preloader" class="preloader"><div class="loader-ring"></div><b>Karobar</b><span>Hisaab tayyar ho raha hai...</span></div>
+
+<div id="lockScreen" class="overlay hidden">
+  <div class="lock-card card">
+    <div class="brand-mark">K</div>
+    <h2>Karobar Lock</h2>
+    <p>Apna PIN dalo.</p>
+    <input id="unlockPin" class="input pin-input" type="password" inputmode="numeric" maxlength="6" placeholder="PIN">
+    <button id="unlockBtn" class="btn primary full">Kholo</button>
+    <p id="unlockMsg" class="error-text"></p>
+  </div>
+</div>
+
+<div id="welcome" class="overlay hidden">
+  <div class="welcome-card card">
+    <div class="brand-mark">K</div>
+    <h1>Karobar</h1>
+    <p>Apni dukaan, stall ya chhote business ka stock aur hisaab aik jagah rakho.</p>
+    <ul class="welcome-list">
+      <li>✓ Offline bhi kaam karta hai</li>
+      <li>✓ Data isi device par save hota hai</li>
+      <li>✓ Backup se doosre device par transfer</li>
+    </ul>
+    <button id="startBtn" class="btn primary full">Shuru Karein</button>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="brand"><div class="brand-mark small">K</div><div><strong>Karobar</strong><small>Digital Hisaab Diary</small></div></div>
+  <div class="top-actions">
+    <button class="icon-btn" data-nav="settings" title="Settings">⚙</button>
+    <button class="icon-btn" id="installBtn" title="Install" hidden>⇩</button>
+  </div>
+</header>
+
+<main id="app" class="app-shell">
+  <section id="home" class="page active">
+    <div class="greeting"><div><p class="eyebrow">Assalam-o-Alaikum</p><h1>Aaj ka Hisaab</h1><span id="todayLabel"></span></div><div class="today-badge">PKR</div></div>
+    <div class="stats-grid">
+      <article class="stat-card"><span>Aaj ki Bikri</span><strong id="dashSales">Rs 0</strong><small id="dashSalesCount">0 sales</small></article>
+      <article class="stat-card"><span>Aaj ka Kharcha</span><strong id="dashExpense">Rs 0</strong><small>Business expense</small></article>
+      <article class="stat-card"><span>Aaj ka Munafa</span><strong id="dashProfit">Rs 0</strong><small>Estimated gross profit</small></article>
+      <article class="stat-card"><span>Total Udhaar</span><strong id="dashCredit">Rs 0</strong><small>Customer balances</small></article>
+    </div>
+
+    <div class="section-head"><h2>Jaldi Kaam</h2></div>
+    <div class="quick-grid">
+      <button class="quick-card" data-action="sale"><b>＋</b><span>Bikri</span></button>
+      <button class="quick-card" data-action="purchase"><b>＋</b><span>Kharid</span></button>
+      <button class="quick-card" data-action="credit"><b>＋</b><span>Udhaar</span></button>
+      <button class="quick-card" data-action="expense"><b>＋</b><span>Kharcha</span></button>
+      <button class="quick-card" data-action="return"><b>↩</b><span>Wapsi</span></button>
+      <button class="quick-card" data-action="stock"><b>▦</b><span>Stock</span></button>
+    </div>
+
+    <div class="section-head"><h2>Stock Alert</h2><button class="text-btn" data-nav="stock">Sab Dekhein</button></div>
+    <div id="lowStockList" class="list"></div>
+
+    <div class="section-head"><h2>Aaj ki Activity</h2><button class="text-btn" data-nav="reports">Report</button></div>
+    <div id="activityList" class="list"></div>
+  </section>
+
+  <section id="stock" class="page">
+    <div class="page-title"><div><p class="eyebrow">Inventory</p><h1>Stock</h1></div><button class="btn primary" data-action="add-item">＋ Item</button></div>
+    <div class="search-row"><input id="stockSearch" class="input" placeholder="Item ka naam ya category search..."></div>
+    <div class="chip-row">
+      <button class="chip active" data-stock-filter="all">Sab</button>
+      <button class="chip" data-stock-filter="low">Low Stock</button>
+      <button class="chip" data-stock-filter="out">Khatam</button>
+    </div>
+    <div id="stockList" class="card-list"></div>
+  </section>
+
+  <section id="credit" class="page">
+    <div class="page-title"><div><p class="eyebrow">Customers</p><h1>Udhaar</h1></div><button class="btn primary" data-action="add-customer">＋ Customer</button></div>
+    <div class="credit-total card"><span>Total Udhaar</span><strong id="creditPageTotal">Rs 0</strong></div>
+    <div class="search-row"><input id="customerSearch" class="input" placeholder="Customer naam ya phone..."></div>
+    <div id="customerList" class="card-list"></div>
+  </section>
+
+  <section id="reports" class="page">
+    <div class="page-title"><div><p class="eyebrow">Hisaab</p><h1>Reports</h1></div><button class="btn secondary" data-action="daily-close">Daily Close</button></div>
+    <div class="report-filter card">
+      <label>Report date<input id="reportDate" class="input" type="date"></label>
+    </div>
+    <div class="stats-grid">
+      <article class="stat-card"><span>Bikri</span><strong id="reportSales">Rs 0</strong></article>
+      <article class="stat-card"><span>Kharcha</span><strong id="reportExpense">Rs 0</strong></article>
+      <article class="stat-card"><span>Munafa</span><strong id="reportProfit">Rs 0</strong></article>
+      <article class="stat-card"><span>Orders</span><strong id="reportOrders">0</strong></article>
+    </div>
+    <div class="card report-block"><h3>Top Items</h3><div id="topItems"></div></div>
+    <div class="card report-block"><h3>Slow Moving</h3><div id="slowItems"></div></div>
+    <div class="card report-block"><h3>Recent Closings</h3><div id="closingList"></div></div>
+  </section>
+
+  <section id="settings" class="page">
+    <div class="page-title"><div><p class="eyebrow">App</p><h1>Settings</h1></div></div>
+    <div class="settings-list">
+      <button class="setting-row" data-action="backup"><span><b>Backup</b><small>JSON file mein apna data save karein</small></span><b>›</b></button>
+      <button class="setting-row" data-action="restore"><span><b>Restore</b><small>Backup JSON wapas load karein</small></span><b>›</b></button>
+      <button class="setting-row" data-action="pin"><span><b>PIN Lock</b><small id="pinStatus">Off</small></span><b>›</b></button>
+      <button class="setting-row" data-action="theme"><span><b>Theme</b><small id="themeStatus">Deep Teal</small></span><b>›</b></button>
+      <button class="setting-row" data-action="install"><span><b>Install App</b><small>Supported device par home screen</small></span><b>›</b></button>
+      <button class="setting-row danger-row" data-action="reset"><span><b>Data Reset</b><small>Sab local data delete hoga</small></span><b>›</b></button>
+    </div>
+    <div class="card about"><h3>Karobar</h3><p>Offline-first business app. Data browser ke IndexedDB mein rehta hai. V1 mein automatic cloud sync nahi hai.</p><small>Version 1.0 • PKR • Roman Urdu UI</small></div>
+  </section>
+</main>
+
+<nav class="bottom-nav">
+  <button class="nav-item active" data-nav="home"><span>⌂</span>Home</button>
+  <button class="nav-item" data-nav="stock"><span>▦</span>Stock</button>
+  <button class="nav-item" data-nav="credit"><span>৳</span>Udhaar</button>
+  <button class="nav-item" data-nav="reports"><span>▥</span>Report</button>
+  <button class="nav-item" data-nav="settings"><span>⚙</span>Settings</button>
+</nav>
+
+<div id="modal" class="modal hidden"><div class="modal-backdrop" data-close-modal></div><div class="modal-card"><div class="modal-head"><h2 id="modalTitle">Karobar</h2><button class="icon-btn" data-close-modal>×</button></div><div id="modalBody"></div></div></div>
+<input id="restoreFile" type="file" accept=".json,application/json" hidden>
+<div id="toast" class="toast"></div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

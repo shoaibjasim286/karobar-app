@@ -1,0 +1,16 @@
+KAROBAR QUICK START
+
+1) ZIP extract karo.
+2) Agar sirf dekhna hai to index.html browser mein open ho jayega, lekin PWA/offline Service Worker ke liye localhost/HTTPS use karo.
+3) Chromebook Linux available ho:
+   python3 -m http.server 8080
+4) Chrome mein http://localhost:8080 kholo.
+5) Shuru Karein dabao.
+6) Stock > + Item se pehla item banao.
+7) Kharid se stock barhao.
+8) Bikri se sale karo.
+9) Udhaar mein customer aur payment manage karo.
+10) Settings > Backup se JSON backup zaroor rakho.
+
+IMPORTANT:
+Automatic cloud sync V1 mein nahi hai. Backup/Restore manual hai.
